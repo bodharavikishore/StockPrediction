@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+<script>
+
+window.onload = function () {
+$.getJSON('https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=AAPL&apikey=5DMWBXEZP59AY45M', function(data) {
+     
+
+    var dec=data["Monthly Time Series"]["2017-12-14"]["5. volume"]
+	var nov=data["Monthly Time Series"]["2017-11-30"]["5. volume"]
+	var sep=data["Monthly Time Series"]["2017-10-31"]["5. volume"]
+	var oct=data["Monthly Time Series"]["2017-09-29"]["5. volume"]
+	var aug=data["Monthly Time Series"]["2017-08-31"]["5. volume"]
+	var july=data["Monthly Time Series"]["2017-07-31"]["5. volume"]
+	var june=data["Monthly Time Series"]["2017-06-30"]["5. volume"]
+	var may=data["Monthly Time Series"]["2017-05-31"]["5. volume"]
+	var apr=data["Monthly Time Series"]["2017-04-28"]["5. volume"]
+	var mar=data["Monthly Time Series"]["2017-03-31"]["5. volume"]
+	var feb=data["Monthly Time Series"]["2017-02-28"]["5. volume"]
+    var jan=data["Monthly Time Series"]["2017-01-31"]["5. volume"]
+	//console.log(jan)
+var dps = [ { x: new Date(2017, 0), y: parseInt(jan)},
+			{ x: new Date(2017, 1), y: parseInt(feb) },
+			{ x: new Date(2017, 2), y: parseInt(mar) },
+			{ x: new Date(2017, 3), y:parseInt(apr)  },
+			{ x: new Date(2017, 4), y: parseInt(may) },
+			{ x: new Date(2017, 5), y: parseInt(june) },
+			{ x: new Date(2017, 6), y: parseInt(july) },
+			{ x: new Date(2017, 7), y: parseInt(aug)},
+			{ x: new Date(2017, 8), y: parseInt(sep)},
+			{ x: new Date(2017, 9), y: parseInt(oct)},
+			{ x: new Date(2017, 10), y: parseInt(nov) },
+			{ x: new Date(2017, 11), y: parseInt(dec)}
+	];  
+	var dps1=[
+			{ x: new Date(2017, 0), y: 40000 },
+			{ x: new Date(2017, 1), y: 42000 },
+			{ x: new Date(2017, 2), y: 45000 },
+			{ x: new Date(2017, 3), y: 45000 },
+			{ x: new Date(2017, 4), y: 47000 },
+			{ x: new Date(2017, 5), y: 43000 },
+			{ x: new Date(2017, 6), y: 42000 },
+			{ x: new Date(2017, 7), y: 43000 },
+			{ x: new Date(2017, 8), y: 41000 },
+			{ x: new Date(2017, 9), y: 45000 },
+			{ x: new Date(2017, 10), y: 42000 },
+			{ x: new Date(2017, 11), y: 50000 }
+		]
+		var dps2=[
+			{ x: new Date(2017, 0), y: 5000 },
+			{ x: new Date(2017, 1), y: 7000 },
+			{ x: new Date(2017, 2), y: 6000},
+			{ x: new Date(2017, 3), y: 30000 },
+			{ x: new Date(2017, 4), y: 20000 },
+			{ x: new Date(2017, 5), y: 15000 },
+			{ x: new Date(2017, 6), y: 13000 },
+			{ x: new Date(2017, 7), y: 20000 },
+			{ x: new Date(2017, 8), y: 15000 },
+			{ x: new Date(2017, 9), y:  10000},
+			{ x: new Date(2017, 10), y: 19000 },
+			{ x: new Date(2017, 11), y: 22000 }
+		]
+console.log(dps[0]);
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2",
+	title: {
+		text: "Monthly Stocks Data of apple"
+	},
+	axisX: {
+		valueFormatString: "MMM"
+	},
+	axisY: {
+		prefix: "$",
+		labelFormatter: addSymbols
+	},
+	toolTip: {
+		shared: true
+	},
+	legend: {
+		cursor: "pointer",
+		itemclick: toggleDataSeries
+	},
+	data: [
+	{
+		type: "column",
+		name: "Actual Sales",
+		showInLegend: true,
+		xValueFormatString: "MMMM YYYY",
+		yValueFormatString: "$#,##0",
+		dataPoints: dps
+	}, 
+	{
+		type: "line",
+		name: "Expected Sales",
+		showInLegend: true,
+		yValueFormatString: "$#,##0",
+		dataPoints: dps1
+	},
+	{
+		type: "area",
+		name: "Profit",
+		markerBorderColor: "white",
+		markerBorderThickness: 2,
+		showInLegend: true,
+		yValueFormatString: "$#,##0",
+		dataPoints: dps2
+	}]
+});
+chart.render();
+
+function addSymbols(e) {
+	var suffixes = ["", "K", "M", "B"];
+	var order = Math.max(Math.floor(Math.log(e.value) / Math.log(100000)), 0);
+
+	if(order > suffixes.length - 1)                	
+		order = suffixes.length - 1;
+
+	var suffix = suffixes[order];      
+	return CanvasJS.formatNumber(e.value / Math.pow(100000, order)) + suffix;
+}
+
+function toggleDataSeries(e) {
+	if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	} else {
+		e.dataSeries.visible = true;
+	}
+	e.chart.render();
+}});}
+
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; width: 100%;">
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</div>
+</body>
+</html>

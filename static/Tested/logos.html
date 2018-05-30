@@ -1,0 +1,146 @@
+<div class="container">
+  <h1></h1>
+  <h2></h2>
+  <!-- Three columns of text below the carousel -->
+  <div class="row">
+    <div class="col-lg-6">
+      <a target="_self" href="home.html" class="imgButton one">
+        <img src="apple.png" class="img-circle" alt="A Purrty Kitten" width="200" height="170" alt="APPLE"></a>
+      <h3></h3>
+    </div>
+    <!-- /.col-lg-4 -->
+    <div class="col-lg-6">
+      <a target="_self" href="#" class="imgButton two">
+        <img class="img-circle" src="microsoft.png" alt="A Dog with Red Bow" width="200" height="170" alt="Microsoft"></a>
+      <h3></h3>
+    </div>
+	<div class="col-lg-6">
+      <a target="_self" href="#" class="imgButton two">
+        <img class="img-circle" src="google.png" alt="A Dog with Red Bow" width="170" height="170" alt="Google"></a>
+      <h3></h3>
+    </div>
+	<div class="col-lg-6">
+      <a target="_self" href="#" class="imgButton two">
+        <img class="img-circle" src="ibm.png" alt="A Dog with Red Bow" width="200" height="170" alt="IBM"></a>
+      <h3></h3>
+    </div>
+	<div class="col-lg-6">
+      <a target="_self" href="#" class="imgButton two">
+        <img class="img-circle" src="amazon.png" alt="A Dog with Red Bow" width="200" height="170" alt="Amazon"></a>
+      <h3></h3>
+    </div>
+    <!-- /.col-lg-4 -->
+  </div>
+  <!-- /.row -->
+  <style>
+  
+  @import url('<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">');
+
+h1 {
+  margin-top: 10px;
+  text-align: center;
+  color: #E89C0C;
+  font-family: 'Gloria Hallelujah', cursive;
+  font-weight: 600;
+  font-size: 3em;
+}
+
+h2 {
+  text-align: center;
+  color: #440CE8;
+  font-family: 'arial', sans-serif;
+  font-size: 2em;
+}
+
+h3 {
+  text-align: center;
+  color: #440CE8;
+  font-family: 'Gloria Hallelujah', cursive;
+  font-weight: 600;
+  font-size: 1.4em;
+}
+
+.col-lg-6 {
+  margin-bottom: 20px;
+  margin-top: 5px;
+  margin-left:25px;
+  text-align: center;
+  display:inline-block;
+  
+}
+
+.imgButton {
+  position: relative;
+}
+
+.imgButton img {
+  transform: translateY(0);
+  transition: all .4s ease-out;
+  border: .5em;
+  -webkit-box-shadow: 8px 7px 5px 0px rgba(0, 0, 0, .3);
+  -moz-box-shadow: 8px 7px 5px 0px rgba(0, 0, 0, .3);
+  box-shadow: 8px 7px 5px 0px rgba(0, 0, 0, .3);
+}
+
+.one:before {
+  content: 'Apple!'
+}
+
+.two:before {
+  content: 'Microsoft!'
+}
+
+.imgButton:before {
+  position: absolute;
+  padding: 15px 20px;
+  left: -40px;
+  bottom: -9px;
+  font-size: 20px;
+  font-family:  'Nunito', sans-serif;
+  color:whitesmoke;
+  background: black;
+  transition: all .4s ease-out;
+  transform: translateY(150px);
+  opacity: 0;
+  z-index: 1;
+  border-radius: 100px;
+  font-weight: normal;
+  border: .2em solid #E89C0C;
+  -webkit-box-shadow: 8px 7px 5px 0px rgba(0, 0, 0, .5);
+  -moz-box-shadow: 8px 7px 5px 0px rgba(0, 0, 0, .5);
+  box-shadow: 8px 7px 5px 0px rgba(0, 0, 0, .5);
+}
+
+.imgButton:hover:before {
+  bottom: 45px;
+  opacity: 100;
+}
+
+.imgButton:hover img {
+  transform: translateY(-10px);
+}
+
+.floatButton {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+
+.floatButton:hover,
+.floatButton:focus,
+.floatButton:active {
+  -webkit-transform: translateY(-8px);
+  transform: translateY(-8px);
+}
+  </style>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- META SECTION -->
+    <title>Stock Prediction</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="icon" href="a.ico" type="image/x-icon" />
+    <!-- END META SECTION -->
+
+    <!-- CSS INCLUDE -->
+    <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css" />
+    <!-- EOF CSS INCLUDE -->
+<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
+    
+<script>
+var dps1=" "
+var res =" ";
+$.get("./apple.txt",function(data){
+res = data.split("\n")
+console.log(res)
+});
+window.onload = function () {
+$.getJSON('https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=AAPL&apikey=5DMWBXEZP59AY45M', function(data) {
+     
+
+    var dec=data["Monthly Time Series"]["2017-12-15"]["5. volume"]
+	var nov=data["Monthly Time Series"]["2017-11-30"]["5. volume"]
+	var sep=data["Monthly Time Series"]["2017-10-31"]["5. volume"]
+	var oct=data["Monthly Time Series"]["2017-09-29"]["5. volume"]
+	var aug=data["Monthly Time Series"]["2017-08-31"]["5. volume"]
+	var july=data["Monthly Time Series"]["2017-07-31"]["5. volume"]
+	var june=data["Monthly Time Series"]["2017-06-30"]["5. volume"]
+	var may=data["Monthly Time Series"]["2017-05-31"]["5. volume"]
+	var apr=data["Monthly Time Series"]["2017-04-28"]["5. volume"]
+	var mar=data["Monthly Time Series"]["2017-03-31"]["5. volume"]
+	var feb=data["Monthly Time Series"]["2017-02-28"]["5. volume"]
+     window.jan=data["Monthly Time Series"]["2017-01-31"]["5. volume"]
+	console.log(jan)
+var dps = [{ x: new Date(2017, 0), y: parseInt(jan)},
+			{ x: new Date(2017, 1), y: parseInt(feb) },
+			{ x: new Date(2017, 2), y: parseInt(mar) },
+			{ x: new Date(2017, 3), y:parseInt(apr)  },
+			{ x: new Date(2017, 4), y: parseInt(may) },
+			{ x: new Date(2017, 5), y: parseInt(june) },
+			{ x: new Date(2017, 6), y: parseInt(july) },
+			{ x: new Date(2017, 7), y: parseInt(aug)},
+			{ x: new Date(2017, 8), y: parseInt(sep)},
+			{ x: new Date(2017, 9), y: parseInt(oct)},
+			{ x: new Date(2017, 10), y: parseInt(nov) },
+			{ x: new Date(2017, 11), y: parseInt(dec)}
+	];  
+	
+	var dps1=[];
+	for(i=0;i<11;i++)
+	{
+	   dps1.push({x:new Date(2017,i),y:parseInt(res[i])})
+	   console.log(typeof(dps1))
+	   JSON.stringify(dps1)
+	   console.log(dps1)
+	}
+console.log(dps[0]);
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2",
+	title: {
+		text: "Monthly Stocks Data of Apple"
+	},
+	axisX: {
+		valueFormatString: "MMM"
+	},
+	axisY: {
+		prefix: "$",
+		labelFormatter: addSymbols
+	},
+	toolTip: {
+		shared: true
+	},
+	legend: {
+		cursor: "pointer",
+		itemclick: toggleDataSeries
+	},
+	data: [
+	{
+		type: "spline",
+		name: "Actual Sales",
+		showInLegend: true,
+		xValueFormatString: "MMMM YYYY",
+		yValueFormatString: "$#,##0",
+		dataPoints: dps
+	}, 
+	{
+		type: "spline",
+		name: "Expected Sales",
+		showInLegend: true,
+		yValueFormatString: "$#,##0",
+		dataPoints: dps1
+	}]
+});
+chart.render();
+
+chart.render();
+function addSymbols(e) {
+	var suffixes = ["", "K", "M", "B"];
+	var order = Math.max(Math.floor(Math.log(e.value) / Math.log(100000)), 0);
+
+	if(order > suffixes.length - 1)                	
+		order = suffixes.length - 1;
+
+	var suffix = suffixes[order];      
+	return CanvasJS.formatNumber(e.value / Math.pow(100000, order)) + suffix;
+}
+
+function toggleDataSeries(e) {
+	if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		e.dataSeries.visible = false;
+	} else {
+		e.dataSeries.visible = true;
+	}
+	e.chart.render();
+}});}
+
+</script>
+
+
+</head>
+<body ng-app="myApp">
+    <!-- START PAGE CONTAINER -->
+    <div class="page-container">
+
+        <!-- START PAGE SIDEBAR -->
+        <div class="page-sidebar">
+            <!-- START X-NAVIGATION -->
+            <ul class="x-navigation">
+                <li class="xn-logo">
+
+                    <a href="#" class="x-navigation-control"></a>
+                </li>
+                <li class="xn-profile">
+                    <a href="#" class="profile-mini">
+                         <img src="images/mss.png" alt="Essay" />
+                    </a>
+                    <div class="profile">
+                        <div class="profile-image">
+                             <img src="images/mss.png" alt="Essay" />
+                        </div>
+
+                    </div>
+                </li>
+                <li class="active">
+				      
+                     <a href="avgg.html" > <span class="xn-text">Annual Stock</span></a>
+                </li>
+				<li>
+                    <a href="applee.html"><img src="https://png.icons8.com/mac-client/androidL/50/000000"><span class="xn-text">Apple</span></a>
+                </li>
+				<li>
+                    <a href="microsoftt.html"><img src="https://png.icons8.com/windows8/color/50/000000"> <span class="xn-text"> &nbsp Microsoft</span></a>
+                </li>
+				<li>
+                    <a href="googlee.html"><img src="https://png.icons8.com/google/color/48/000000" width="40px">&nbsp </span> <span class="xn-text">Google</span></a>
+                </li>
+				<li>
+                    <a href="amazonn.html"><img src="https://png.icons8.com/amazon/color/50/000000"> <span class="xn-text">Amazon</span></a>
+                </li>
+                <li >
+                    <a href="ibmm.html"><img src="https://png.icons8.com/ibm/color/50/000000"> <span class="xn-text">IBM</span></a>
+                   
+				</li>
+				<li >
+                    <a href="http://localhost:3000/"><img src="https://png.icons8.com/blockchain/ios7/50/000000"> <span class="xn-text">BUY STOCK</span></a>
+                   
+				</li>
+				<li >
+                    <a href="https://console.dialogflow.com/api-client/demo/embedded/22b02fe5-c9b6-4acf-9c59-82e308c8d692"><img src=""> <span class="xn-text">HELP- DESK</span></a>
+                   
+				</li>
+            <!-- END X-NAVIGATION -->
+        </div>
+        <!-- END PAGE SIDEBAR -->
+
+        <!-- PAGE CONTENT -->
+     <div class="page-content">
+
+            <!-- START X-NAVIGATION VERTICAL -->
+            <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+                <!-- TOGGLE NAVIGATION -->
+                <li class="xn-icon-button">
+                    <a href="#" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+                </li>
+                <!-- END TOGGLE NAVIGATION -->
+                <!-- SIGN OUT -->
+                <li class="xn-icon-button pull-right">
+                    <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>
+                </li>
+                <!-- END SIGN OUT -->
+
+
+            </ul>
+            <!-- END X-NAVIGATION VERTICAL -->
+
+            <!-- START BREADCRUMB -->
+            <!--<ul class="breadcrumb">
+                <li><a href="#/index.html">Home</a></li>
+                <li class="active">essay</li>
+                <li class="active">Watson services</li>
+			</ul>-->
+            <!-- END BREADCRUMB -->
+
+          <!-- START CONTENT FRAME -->
+            <div class="content-frame">
+
+                <!-- START CONTENT FRAME TOP -->
+                <div class="content-frame-top">
+                    <div id="chartContainer" style="height: 620px; width: 100%; align:center-left;">
+                        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                     </div>
+
+                </div>
+
+
+
+                <!-- START CONTENT FRAME BODY -->
+                <div class="content-frame-body content-frame-body-left">
+
+
+
+
+  
+
+
+                </div>
+                <!-- END CONTENT FRAME BODY -->
+            </div>
+            <!-- END CONTENT FRAME -->
+
+
+
+        </div>
+        <!-- END PAGE CONTENT -->
+    </div> 
+    <!-- END PAGE CONTAINER -->
+
+    <!-- MESSAGE BOX-->
+    <div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
+        <div class="mb-container">
+            <div class="mb-middle">
+                <div class="mb-title"><span class="fa fa-sign-out"></span> Log <strong>Out</strong> ?</div>
+                <div class="mb-content">
+                    <p>Are you sure you want to log out?</p>
+                    <p>Press No if youwant to continue work. Press Yes to logout current user.</p>
+                </div>
+                <div class="mb-footer">
+                    <div class="pull-right">
+                        <a href="/logout" class="btn btn-success btn-lg">Yes</a>
+                        <button class="btn btn-default btn-lg mb-control-close">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END MESSAGE BOX-->
+
+    <!-- START PRELOADS -->
+    <audio id="audio-alert" src="audio/alert.mp3" preload="auto"></audio>
+    <audio id="audio-fail" src="audio/fail.mp3" preload="auto"></audio>
+    <!-- END PRELOADS -->
+
+    <!-- START SCRIPTS -->
+    <!-- START PLUGINS -->
+    <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>
+    <!-- END PLUGINS -->
+
+    <!-- START THIS PAGE PLUGINS-->
+    <script type='text/javascript' src='js/plugins/icheck/icheck.min.js'></script>
+    <script type="text/javascript" src="js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+    <script type="text/javascript" src="js/plugins/scrolltotop/scrolltopcontrol.js"></script>
+
+
+    <script type="text/javascript" src="js/plugins/rickshaw/d3.v3.js"></script>
+    <script type="text/javascript" src="js/plugins/rickshaw/rickshaw.min.js"></script>
+    <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
+    <script type='text/javascript' src='js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>
+    <script type='text/javascript' src='js/plugins/bootstrap/bootstrap-datepicker.js'></script>
+    <script type="text/javascript" src="js/plugins/owl/owl.carousel.min.js"></script>
+
+    <script type="text/javascript" src="js/plugins/moment.min.js"></script>
+    <script type="text/javascript" src="js/plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- END THIS PAGE PLUGINS-->
+
+    <script type="text/javascript" src="js/plugins.js"></script>
+    <script type="text/javascript" src="js/actions.js"></script>
+
+
+
+
+
+    </body>
+
+</html>
